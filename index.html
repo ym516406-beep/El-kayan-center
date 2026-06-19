@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="التسجيل الإلكتروني للطلاب في سنتر الكيان التعليمي">
+    <title>سنتر الكيان التعليمي | بوابة التسجيل</title>
+    <style>
+        /* =========================================
+           1. CSS Variables & Theme Configuration
+           ========================================= */
+        :root {
+            /* Color Palette */
+            --bg-base: #0B1120;
+            --bg-surface: #151F32;
+            --bg-surface-hover: #1E2B45;
+            --primary-navy: #16223D;
+            --accent-gold: #D4AF37;
+            --accent-gold-hover: #F3CA3E;
+            --accent-red: #B81D24;
+            --accent-red-hover: #D9232A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --border-color: #2A3B5C;
+            --error-color: #EF4444;
+            --success-color: #10B981;
+            
+            /* Typography & Shadows */
+            --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 15px rgba(212, 175, 55, 0.3);
+            
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* =========================================
+           2. Reset & Base Styles
+           ========================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* =========================================
+           3. Layout & Structure
+           ========================================= */
+        header {
+            background: linear-gradient(180deg, var(--primary-navy) 0%, var(--bg-base) 100%);
+            border-bottom: 2px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .brand-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-gold);
+            padding: 5px;
+            background-color: var(--bg-surface);
+            object-fit: cover;
+            box-shadow: var(--shadow-glow);
+            transition: transform var(--transition-normal);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 650px;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* =========================================
+           4. Progress Tracker
+           ========================================= */
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px 40px 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            z-index: 2;
+            width: 33.33%;
+        }
+
+        .step-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--bg-base);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-secondary);
+            transition: all var(--transition-normal);
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            transition: color var(--transition-normal);
+        }
+
+        .step.active .step-circle {
+            background-color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--bg-base);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .step.active .step-label {
+            color: var(--accent-gold);
+        }
+
+        .step.completed .step-circle {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: #fff;
+        }
+
+        .stepper-line {
+            position: absolute;
+            top: 48px;
+            left: 16%;
+            right: 16%;
+            height: 2px;
+            background-color: var(--border-color);
+            z-index: 1;
+        }
+
+        .stepper-line-progress {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent-gold);
+            transition: width 0.4s ease;
+        }
+
+        /* =========================================
+           5. Form Controls & Inputs
+           ========================================= */
+        .form-content {
+            padding: 40px;
+        }
+
+        .form-section {
+            display: none;
+            animation: slideLeft 0.4s ease-out forwards;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .input-control {
+            width: 100%;
+            background-color: var(--bg-base);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 16px;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+            outline: none;
+            appearance: none;
+        }
+
+        .input-control:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .input-control::placeholder {
+            color: transparent; /* For floating label effect */
+        }
+
+        .floating-label {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            color: var(--text-secondary);
+            pointer-events: none;
+            transition: all var(--transition-fast);
+            background-color: var(--bg-base);
+            padding: 0 4px;
+        }
+
+        /* Floating Label Mechanics */
+        .input-control:focus ~ .floating-label,
+        .input-control:not(:placeholder-shown) ~ .floating-label {
+            top: -10px;
+            right: 12px;
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+        }
+
+        select.input-control {
+            cursor: pointer;
+            padding-left: 40px;
+        }
+
+        .select-arrow {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .input-control.invalid {
+            border-color: var(--error-color);
+        }
+
+        .input-control.invalid ~ .error-message {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        /* =========================================
+           6. Buttons & Actions
+           ========================================= */
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(184, 29, 36, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(184, 29, 36, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-surface-hover);
+            color: var(--text-primary);
+        }
+
+        /* =========================================
+           7. Loading Overlay & Success Screen
+           ========================================= */
+        .loader-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(11, 17, 32, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition-normal);
+        }
+
+        .loader-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .success-screen {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--success-color);
+            font-size: 40px;
+            border: 2px solid var(--success-color);
+        }
+
+        .success-screen h2 {
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        /* =========================================
+           8. Toast Notifications
+           ========================================= */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background-color: var(--bg-surface);
+            border-right: 4px solid var(--error-color);
+            color: var(--text-primary);
+            padding: 15px 25px;
+            border-radius: 6px;
+            box-shadow: var(--shadow-lg);
+            font-weight: 600;
+            animation: slideUpToast 0.3s forwards, fadeOutToast 0.3s 3s forwards;
+            min-width: 250px;
+        }
+
+        /* =========================================
+           9. Animations
+           ========================================= */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes slideUpToast { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutToast { from { opacity: 1; } to { opacity: 0; } }
+
+        /* =========================================
+           10. Responsive Design
+           ========================================= */
+        @media (max-width: 600px) {
+            .stepper { padding: 20px; }
+            .step-label { font-size: 0.75rem; }
+            .form-content { padding: 25px 20px; }
+            .btn { font-size: 1rem; padding: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-container">
+            <!-- استخدام مسار الصورة بالحرف الواحد بناءً على طلبك -->
+            <img src="WhatsApp Image 2026-06-19 at 6.20.23 PM_2.jpeg" alt="لوجو سنتر الكيان" class="logo" onerror="this.src='https://via.placeholder.com/150/16223D/D4AF37?text=AL-KAYAN'">
+            <div>
+                <h1>سنتر الكيان التعليمي</h1>
+                <div class="subtitle">Student Academy</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="app-container">
+            
+            <!-- Loading Overlay -->
+            <div class="loader-overlay" id="loader">
+                <div class="spinner"></div>
+                <p style="margin-top: 15px; color: var(--accent-gold); font-weight: bold;">جاري معالجة البيانات...</p>
+            </div>
+
+            <!-- Progress Tracker -->
+            <div class="stepper" id="stepper">
+                <div class="stepper-line"><div class="stepper-line-progress" id="progressLine"></div></div>
+                <div class="step active" id="indicator-1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">بياناتك</div>
+                </div>
+                <div class="step" id="indicator-2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">المادة</div>
+                </div>
+                <div class="step" id="indicator-3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">الموعد</div>
+                </div>
+            </div>
+
+            <div class="form-content">
+                <form id="registrationApp" novalidate>
+                    
+                    <!-- Section 1: Personal Info -->
+                    <div class="form-section active" id="section-1">
+                        <div class="input-group">
+                            <input type="text" id="studentName" class="input-control" placeholder="الاسم" required autocomplete="off">
+                            <label class="floating-label">اسم الطالب ثلاثي</label>
+                            <div class="error-message">يرجى إدخال الاسم بالكامل (لا يقل عن 8 أحرف)</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <input type="tel" id="studentPhone" class="input-control" placeholder="الهاتف" required autocomplete="off" dir="ltr" style="text-align: right;">
+                            <label class="floating-label">رقم الهاتف المحمول</label>
+                            <div class="error-message">صيغة الرقم غير صحيحة. يجب أن يتكون من 11 رقم ويبدأ بـ 01</div>
+                        </div>
+
+                        <div class="actions">
+                            <button type="button" class="btn btn-primary" onclick="appController.next(1)">
+                                المتابعة لاختيار المادة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Subject -->
+                    <div class="form-section" id="section-2">
+                        <div class="input-group">
+                            <select id="subjectSelect" class="input-control" required>
+                                <option value="" disabled selected></option>
+                            </select>
+                            <label class="floating-label">المادة الدراسية</label>
+                            <div class="select-arrow"></div>
+                            <div class="error-message">يرجى اختيار المادة الدراسية للمتابعة</div>
+                        </div>
+
+                        <div class="actions">
+                            <button type="button" class="btn btn-secondary" onclick="appController.prev(2)">السابق</button>
+                            <button type="button" class="btn btn-primary" onclick="appController.next(2)">المتابعة للمدرسين</button>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Teacher & Time -->
+                    <div class="form-section" id="section-3">
+                        <div class="input-group">
+                            <select id="teacherSelect" class="input-control" required>
+                                <option value="" disabled selected></option>
+                            </select>
+                            <label class="floating-label">اسم المدرس</label>
+                            <div class="select-arrow"></div>
+                            <div class="error-message">يرجى اختيار المدرس</div>
+                        </div>
+
+                        <div class="input-group">
+                            <select id="timeSelect" class="input-control" required>
+                                <option value="" disabled selected></option>
+                                <option value="الموعد 1">الموعد 1</option>
+                                <option value="الموعد 2">الموعد 2</option>
+                                <option value="الموعد 3">الموعد 3</option>
+                                <option value="الموعد 4">الموعد 4</option>
+                                <option value="الموعد 5">الموعد 5</option>
+                            </select>
+                            <label class="floating-label">الموعد المتاح</label>
+                            <div class="select-arrow"></div>
+                            <div class="error-message">يرجى تحديد الموعد المناسب</div>
+                        </div>
+
+                        <div class="actions">
+                            <button type="button" class="btn btn-secondary" onclick="appController.prev(3)">تعديل المادة</button>
+                            <button type="submit" class="btn btn-primary">تأكيد الحجز النهائي</button>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Success State (Hidden initially) -->
+                    <div class="form-section" id="section-4">
+                        <div class="success-screen">
+                            <div class="success-icon">✓</div>
+                            <h2>تم التسجيل بنجاح!</h2>
+                            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                             اهلا بك في سنتر الكيان يسعدنا انضمامك الينا 
+                            </p>
+                            <button type="button" class="btn btn-secondary" onclick="location.reload()">تسجيل طالب آخر</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast-container"></div>
+
+    <script>
+        /* =========================================
+           Application Data & State Management
+           ========================================= */
+        const DB = {
+            "اللغة العربية": ["ميس زينب وحيد", "ميس إنجي بهـاء", "ميس آية صبحي", "ميس عزة انور"],
+            "اللغة الإنجليزية": ["ميس أسماء يونس", "ميس أروي صبري", "ميس وسام كمال"],
+            "Math": ["مستر عصام مدين", "ميس همس الصعيدي"],
+            "sciences": ["ميس سهر علام", "ميس بسنت عبد العزيز", "ميس مرهان عادل"],
+            "رياضيات": ["مستر احمد رشدي", "مس اسماء فتحي", "مستر احمد مصطفي", "مس عزة انور"],
+            "علوم": ["ميس فاطمة خالد", "ميس بسنت عبد العزيز", "مستر عبد الرحمن مجدي"],
+            "دراسات": ["مستر عبد الرحمن الهباشة"],
+            "كيمياء وعلوم متكاملة": ["ا. عبدالله نزار"],
+            "فيزياء وعلوم متكاملة": ["ا. عبد الرحمن مجدي"],
+            "فلسفه": ["ا. فايزة عاطف"],
+            "علوم شرعية ـ قرآن ـ تربية دينية": ["ا. حبيبة أيمن"],
+            "Ict وتكنولوجيا المعلومات": ["ا. رنا سحبل (Ict)", "ا. غادة الفيشاوي ( تكنولوجيا)"]
+        };
+
+        const WEB_APP_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+        /* =========================================
+           Core Controller Logic
+           ========================================= */
+        const appController = {
+            currentStep: 1,
+            totalSteps: 3,
+
+            init() {
+                this.populateSubjects();
+                this.bindEvents();
+            },
+
+            populateSubjects() {
+                const subjectSelect = document.getElementById('subjectSelect');
+                for (let subject in DB) {
+                    let option = new Option(subject, subject);
+                    subjectSelect.add(option);
+                }
+            },
+
+            populateTeachers(subject) {
+                const teacherSelect = document.getElementById('teacherSelect');
+                teacherSelect.innerHTML = '<option value="" disabled selected></option>'; // Reset
+                if (DB[subject]) {
+                    DB[subject].forEach(teacher => {
+                        teacherSelect.add(new Option(teacher, teacher));
+                    });
+                }
+            },
+
+            bindEvents() {
+                // Clear validation errors on input
+                document.querySelectorAll('.input-control').forEach(input => {
+                    input.addEventListener('input', () => input.classList.remove('invalid'));
+                    input.addEventListener('change', () => input.classList.remove('invalid'));
+                });
+
+                // Subject change triggers teacher update
+                document.getElementById('subjectSelect').addEventListener('change', (e) => {
+                    this.populateTeachers(e.target.value);
+                });
+
+                // Form Submit
+                document.getElementById('registrationApp').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.submitForm();
+                });
+            },
+
+            validateStep(step) {
+                let isValid = true;
+                if (step === 1) {
+                    const nameInput = document.getElementById('studentName');
+                    const phoneInput = document.getElementById('studentPhone');
+                    
+                    if (nameInput.value.trim().length < 8) {
+                        nameInput.classList.add('invalid');
+                        isValid = false;
+                    }
+                    
+                    // Egyptian Phone Format Validation: 11 digits, starts with 01
+                    const phoneRegex = /^01[0125][0-9]{8}$/;
+                    if (!phoneRegex.test(phoneInput.value.trim())) {
+                        phoneInput.classList.add('invalid');
+                        isValid = false;
+                    }
+                } 
+                else if (step === 2) {
+                    const subjectSelect = document.getElementById('subjectSelect');
+                    if (!subjectSelect.value) {
+                        subjectSelect.classList.add('invalid');
+                        isValid = false;
+                    }
+                }
+                else if (step === 3) {
+                    const teacherSelect = document.getElementById('teacherSelect');
+                    const timeSelect = document.getElementById('timeSelect');
+                    
+                    if (!teacherSelect.value) { teacherSelect.classList.add('invalid'); isValid = false; }
+                    if (!timeSelect.value) { timeSelect.classList.add('invalid'); isValid = false; }
+                }
+
+                if (!isValid) this.showToast("يرجى تصحيح الأخطاء قبل المتابعة");
+                return isValid;
+            },
+
+            next(current) {
+                if (!this.validateStep(current)) return;
+                
+                document.getElementById(`indicator-${current}`).classList.add('completed');
+                this.goToStep(current + 1);
+            },
+
+            prev(current) {
+                this.goToStep(current - 1);
+            },
+
+            goToStep(targetStep) {
+                // Hide all sections
+                document.querySelectorAll('.form-section').forEach(sec => sec.classList.remove('active'));
+                
+                // Show target section
+                document.getElementById(`section-${targetStep}`).classList.add('active');
+                
+                // Update Progress UI
+                if (targetStep <= this.totalSteps) {
+                    document.querySelectorAll('.step').forEach((step, index) => {
+                        if (index + 1 === targetStep) {
+                            step.classList.add('active');
+                            step.classList.remove('completed');
+                        } else if (index + 1 > targetStep) {
+                            step.classList.remove('active', 'completed');
+                        }
+                    });
+
+                    // Update Line
+                    const progressPercentage = ((targetStep - 1) / (this.totalSteps - 1)) * 100;
+                    document.getElementById('progressLine').style.width = `${progressPercentage}%`;
+                }
+                
+                this.currentStep = targetStep;
+            },
+
+            async submitForm() {
+                if (!this.validateStep(3)) return;
+
+                const payload = {
+                    name: document.getElementById('studentName').value.trim(),
+                    phone: document.getElementById('studentPhone').value.trim(),
+                    subject: document.getElementById('subjectSelect').value,
+                    teacher: document.getElementById('teacherSelect').value,
+                    time: document.getElementById('timeSelect').value
+                };
+
+                const loader = document.getElementById('loader');
+                loader.classList.add('active');
+
+                try {
+                    if (WEB_APP_URL !== "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+                        await fetch(WEB_APP_URL, {
+                            method: 'POST',
+                            mode: 'no-cors', // standard for Google Scripts from client
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                    } else {
+                        // Simulate network delay for demo purposes
+                        await new Promise(resolve => setTimeout(resolve, 1500));
+                    }
+                    
+                    // Success
+                    loader.classList.remove('active');
+                    document.getElementById('stepper').style.display = 'none'; // Hide stepper on success
+                    this.goToStep(4); // Success screen
+
+                } catch (error) {
+                    loader.classList.remove('active');
+                    this.showToast("حدث خطأ في الاتصال بالخادم. حاول مرة أخرى.");
+                    console.error("Submission Error:", error);
+                }
+            },
+
+            showToast(message) {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerText = message;
+                container.appendChild(toast);
+                
+                // Remove from DOM after animation ends
+                setTimeout(() => {
+                    toast.remove();
+                }, 3500);
+            }
+        };
+
+        // Initialize App on DOM Ready
+        document.addEventListener('DOMContentLoaded', () => {
+            appController.init();
+        });
+    </script>
+</body>
+</html>
