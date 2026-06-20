@@ -2,179 +2,368 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="التسجيل الإلكتروني للطلاب في سنتر الكيان التعليمي">
-    <title>سنتر الكيان التعليمي | بوابة التسجيل</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#070B14">
+    <meta name="description" content="سجّل الآن إلكترونياً في سنتر الكيان التعليمي، واختر المادة والمدرس والموعد المناسب لك في خطوات بسيطة وسريعة.">
+    <title>سنتر الكيان التعليمي</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='47' fill='%230D1626'/%3E%3Ccircle cx='50' cy='50' r='47' fill='none' stroke='%23D4AF37' stroke-width='4'/%3E%3Ctext x='50' y='68' font-size='52' font-family='Georgia,serif' fill='%23D4AF37' text-anchor='middle'%3E%D9%83%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* =========================================
-           1. CSS Variables & Theme Configuration
+           1. Design Tokens — "Academic Crest" identity
+           Navy = trust · Gold = excellence · Crimson = action
            ========================================= */
         :root {
-            /* Color Palette */
-            --bg-base: #0B1120;
-            --bg-surface: #151F32;
-            --bg-surface-hover: #1E2B45;
-            --primary-navy: #16223D;
-            --accent-gold: #D4AF37;
-            --accent-gold-hover: #F3CA3E;
-            --accent-red: #B81D24;
-            --accent-red-hover: #D9232A;
-            --text-primary: #FFFFFF;
-            --text-secondary: #94A3B8;
-            --border-color: #2A3B5C;
-            --error-color: #EF4444;
-            --success-color: #10B981;
-            
-            /* Typography & Shadows */
-            --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
-            --shadow-glow: 0 0 15px rgba(212, 175, 55, 0.3);
-            
-            /* Transitions */
+            /* Surfaces */
+            --navy-950: #070B14;
+            --navy-900: #0E1626;
+            --surface: #141F36;
+            --surface-hover: #1C2A47;
+            --border-color: #283655;
+
+            /* Brand accents */
+            --gold: #D4AF37;
+            --gold-bright: #ECC964;
+            --gold-soft: rgba(212, 175, 55, 0.12);
+            --crimson: #842734;
+            --crimson-hover: #9C2E3E;
+
+            /* Text */
+            --text-primary: #F5F7FB;
+            --text-secondary: #92A0BC;
+            --text-muted: #5C6B89;
+
+            /* Feedback */
+            --error: #FF6B6B;
+            --success: #22B573;
+
+            /* Typography */
+            --font-display: 'Cairo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --font-body: 'Tajawal', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+            /* Radii & Shadows */
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 24px;
+            --shadow-sm: 0 4px 10px -2px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
+            --shadow-gold-glow: 0 0 0 1px rgba(212, 175, 55, 0.25), 0 8px 24px rgba(212, 175, 55, 0.18);
+
             --transition-fast: 0.2s ease;
-            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* =========================================
-           2. Reset & Base Styles
+           2. Reset & Base
            ========================================= */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: var(--font-family); background-color: var(--bg-base);
-            color: var(--text-primary); line-height: 1.5; min-height: 100vh;
+            font-family: var(--font-body); background-color: var(--navy-950);
+            background-image: radial-gradient(circle at 50% -10%, #101B30 0%, #070B14 55%);
+            color: var(--text-primary); line-height: 1.6; min-height: 100vh;
             display: flex; flex-direction: column; overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
+        :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
         /* =========================================
-           3. Layout & Structure
+           3. Header
            ========================================= */
         header {
-            background: linear-gradient(180deg, var(--primary-navy) 0%, var(--bg-base) 100%);
-            border-bottom: 2px solid var(--border-color);
-            padding: 40px 20px; text-align: center; position: relative;
+            position: relative; overflow: hidden;
+            background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-950) 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 48px 20px 40px; text-align: center;
+        }
+        header::before {
+            content: ''; position: absolute; inset: 0; opacity: 0.07; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-width='1'%3E%3Cpath d='M32 4 L43 19 L60 19 L48 32 L60 45 L43 45 L32 60 L21 45 L4 45 L16 32 L4 19 L21 19 Z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 64px 64px;
         }
         header::after {
-            content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
-        .brand-container { display: flex; flex-direction: column; align-items: center; gap: 15px; animation: slideDown 0.6s ease-out; }
+        .brand-container { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; animation: slideDown 0.6s ease-out; }
+        .logo-frame {
+            position: relative; width: 132px; height: 132px; border-radius: 50%;
+            padding: 5px; background: conic-gradient(from 180deg, var(--gold), var(--gold-bright), var(--gold));
+            box-shadow: var(--shadow-gold-glow); transition: transform var(--transition-normal);
+        }
+        .logo-frame:hover { transform: scale(1.04); }
+        .logo-frame::after {
+            content: ''; position: absolute; inset: 9px; border-radius: 50%;
+            border: 1px dashed rgba(212, 175, 55, 0.45); pointer-events: none;
+        }
         .logo {
-            width: 140px; height: 140px; border-radius: 50%;
-            border: 3px solid var(--accent-gold); padding: 5px;
-            background-color: var(--bg-surface); object-fit: cover;
-            box-shadow: var(--shadow-glow); transition: transform var(--transition-normal);
+            width: 100%; height: 100%; border-radius: 50%; display: block; object-fit: cover;
+            background-color: var(--navy-900); border: 4px solid var(--navy-950);
         }
-        .logo:hover { transform: scale(1.05); }
-        h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .subtitle { color: var(--accent-gold); font-size: 1.1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
-        
-        main { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: 40px 20px; }
+        h1 { font-family: var(--font-display); font-size: 1.9rem; font-weight: 800; letter-spacing: -0.3px; text-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+        .subtitle { color: var(--gold); font-size: 0.95rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; margin-top: 6px; }
+        .tagline { color: var(--text-secondary); font-size: 0.9rem; margin-top: 10px; font-weight: 500; }
+
+        /* =========================================
+           4. Layout
+           ========================================= */
+        main { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: 36px 20px; }
         .app-container {
-            width: 100%; max-width: 650px; background-color: var(--bg-surface);
-            border: 1px solid var(--border-color); border-radius: 16px;
+            width: 100%; max-width: 640px; background-color: var(--surface);
+            border: 1px solid var(--border-color); border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg); position: relative; overflow: hidden; animation: fadeIn 0.8s ease-out;
         }
+        .app-container::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--crimson), var(--gold), var(--crimson));
+        }
 
         /* =========================================
-           4. Progress Tracker
+           5. Progress Tracker
            ========================================= */
-        .stepper { display: flex; justify-content: space-between; padding: 30px 40px 20px; background-color: rgba(0, 0, 0, 0.2); border-bottom: 1px solid var(--border-color); position: relative; }
-        .step { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 2; width: 33.33%; }
-        .step-circle { width: 36px; height: 36px; border-radius: 50%; background-color: var(--bg-base); border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--text-secondary); transition: all var(--transition-normal); }
+        .stepper { display: flex; justify-content: space-between; padding: 32px 40px 22px; background-color: rgba(0, 0, 0, 0.18); border-bottom: 1px solid var(--border-color); position: relative; }
+        .step { display: flex; flex-direction: column; align-items: center; gap: 9px; position: relative; z-index: 2; width: 33.33%; }
+        .step-circle {
+            position: relative; width: 38px; height: 38px; border-radius: 50%; background-color: var(--navy-950);
+            border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-display); font-weight: 700; color: var(--text-secondary);
+            transition: all var(--transition-normal);
+        }
         .step-label { font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; transition: color var(--transition-normal); }
-        .step.active .step-circle { background-color: var(--accent-gold); border-color: var(--accent-gold); color: var(--bg-base); box-shadow: var(--shadow-glow); }
-        .step.active .step-label { color: var(--accent-gold); }
-        .step.completed .step-circle { background-color: var(--success-color); border-color: var(--success-color); color: #fff; }
-        .stepper-line { position: absolute; top: 48px; left: 16%; right: 16%; height: 2px; background-color: var(--border-color); z-index: 1; }
-        .stepper-line-progress { height: 100%; width: 0%; background-color: var(--accent-gold); transition: width 0.4s ease; }
+        .step.active .step-circle { background-color: var(--gold); border-color: var(--gold); color: var(--navy-950); box-shadow: var(--shadow-gold-glow); }
+        .step.active .step-label { color: var(--gold); }
+        .step.completed .step-circle { background-color: var(--success); border-color: var(--success); color: transparent; }
+        .step.completed .step-circle::after {
+            content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 1.05rem; font-weight: 700;
+        }
+        .step.completed .step-label { color: var(--success); }
+        .stepper-line { position: absolute; top: 51px; left: 16%; right: 16%; height: 2px; background-color: var(--border-color); z-index: 1; }
+        .stepper-line-progress { height: 100%; width: 0%; background-color: var(--gold); transition: width 0.4s ease; }
 
         /* =========================================
-           5. Form Controls
+           6. Form Controls
            ========================================= */
         .form-content { padding: 40px; }
         .form-section { display: none; animation: slideLeft 0.4s ease-out forwards; }
         .form-section.active { display: block; }
-        .input-group { position: relative; margin-bottom: 30px; }
-        .input-control { width: 100%; background-color: var(--bg-base); border: 2px solid var(--border-color); color: var(--text-primary); padding: 16px; font-size: 1rem; border-radius: 8px; transition: all var(--transition-fast); outline: none; appearance: none; }
-        .input-control:focus { border-color: var(--accent-gold); box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1); }
+        .section-heading { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+        .section-heading .dot { width: 8px; height: 8px; border-radius: 50%; background-color: var(--gold); flex-shrink: 0; }
+        .input-group { position: relative; margin-bottom: 28px; }
+        .input-control {
+            width: 100%; background-color: var(--navy-950); border: 2px solid var(--border-color);
+            color: var(--text-primary); padding: 16px 16px 16px 44px; font-size: 1rem; font-family: var(--font-body);
+            border-radius: var(--radius-sm); transition: all var(--transition-fast); outline: none; appearance: none;
+        }
+        .input-control:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-soft); }
         .input-control::placeholder { color: transparent; }
-        .floating-label { position: absolute; top: 16px; right: 16px; color: var(--text-secondary); pointer-events: none; transition: all var(--transition-fast); background-color: var(--bg-base); padding: 0 4px; }
-        .input-control:focus ~ .floating-label, .input-control:not(:placeholder-shown) ~ .floating-label { top: -10px; right: 12px; font-size: 0.85rem; color: var(--accent-gold); }
-        select.input-control { cursor: pointer; padding-left: 40px; }
-        .select-arrow { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid var(--text-secondary); pointer-events: none; }
-        .error-message { color: var(--error-color); font-size: 0.85rem; margin-top: 6px; display: none; }
-        .input-control.invalid { border-color: var(--error-color); }
+        .floating-label {
+            position: absolute; top: 16px; right: 16px; color: var(--text-secondary); pointer-events: none;
+            transition: all var(--transition-fast); background-color: var(--navy-950); padding: 0 4px; font-size: 1rem;
+        }
+        .input-control:focus ~ .floating-label, .input-control:not(:placeholder-shown) ~ .floating-label {
+            top: -10px; right: 12px; font-size: 0.82rem; color: var(--gold);
+        }
+        .input-icon {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px;
+            color: var(--text-muted); pointer-events: none; display: flex; transition: color var(--transition-fast);
+        }
+        .input-icon svg { width: 100%; height: 100%; }
+        .input-control:focus ~ .input-icon, .input-control:not(:placeholder-shown) ~ .input-icon { color: var(--gold); }
+
+        select.input-control { cursor: pointer; }
+        .select-arrow {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2392A0BC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: center; pointer-events: none;
+            transition: transform var(--transition-fast);
+        }
+        .input-control:focus ~ .select-arrow { transform: translateY(-50%) rotate(180deg); }
+        .error-message { color: var(--error); font-size: 0.85rem; margin-top: 7px; display: none; font-weight: 500; }
+        .input-control.invalid { border-color: var(--error); }
         .input-control.invalid ~ .error-message { display: block; animation: fadeIn 0.3s; }
+        .error-message.show { display: block; animation: fadeIn 0.3s; }
 
         /* =========================================
-           6. Buttons
+           6b. Selectable Cards — Teacher & Time
            ========================================= */
-        .actions { display: flex; gap: 15px; margin-top: 40px; border-top: 1px solid var(--border-color); padding-top: 25px; }
-        .btn { flex: 1; padding: 16px 24px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; transition: all var(--transition-fast); display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .btn-primary { background-color: var(--accent-red); color: #fff; box-shadow: 0 4px 15px rgba(184, 29, 36, 0.3); }
-        .btn-primary:hover { background-color: var(--accent-red-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(184, 29, 36, 0.4); }
+        .context-chip {
+            display: inline-flex; align-items: center; gap: 8px; background-color: var(--gold-soft);
+            color: var(--gold); font-size: 0.85rem; font-weight: 700; padding: 7px 14px;
+            border-radius: 999px; margin-bottom: 24px;
+        }
+        .field-block { margin-bottom: 28px; }
+        .field-title { display: block; font-size: 0.9rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 12px; }
+
+        .option-list {
+            display: flex; flex-direction: column; gap: 10px;
+            border: 2px solid transparent; border-radius: var(--radius-md); transition: border-color var(--transition-fast);
+        }
+        .option-card {
+            display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%;
+            background-color: var(--navy-950); border: 2px solid var(--border-color); border-radius: var(--radius-sm);
+            padding: 12px 16px; cursor: pointer; transition: all var(--transition-fast); text-align: right;
+            font-family: var(--font-body); color: var(--text-primary); font-size: 0.96rem; font-weight: 600;
+        }
+        .option-card:hover { border-color: var(--gold); background-color: var(--surface-hover); }
+        .option-card .option-info { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .option-card .option-info span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .option-avatar {
+            width: 34px; height: 34px; border-radius: 50%; background-color: var(--surface-hover);
+            display: flex; align-items: center; justify-content: center; font-family: var(--font-display);
+            font-weight: 700; color: var(--gold); flex-shrink: 0; transition: all var(--transition-fast);
+        }
+        .option-radio {
+            position: relative; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border-color);
+            flex-shrink: 0; transition: all var(--transition-fast);
+        }
+        .option-card.selected { border-color: var(--gold); background-color: var(--gold-soft); }
+        .option-card.selected .option-avatar { background-color: var(--gold); color: var(--navy-950); }
+        .option-card.selected .option-radio { border-color: var(--gold); background-color: var(--gold); }
+        .option-card.selected .option-radio::after {
+            content: ''; position: absolute; inset: 5px; border-radius: 50%; background-color: var(--navy-950);
+        }
+        .option-list.invalid { border-color: var(--error); padding: 6px; }
+
+        .option-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(102px, 1fr)); gap: 10px;
+            border: 2px solid transparent; border-radius: var(--radius-md); transition: border-color var(--transition-fast);
+        }
+        .option-grid.invalid { border-color: var(--error); padding: 6px; }
+        .time-chip {
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+            background-color: var(--navy-950); border: 2px solid var(--border-color); border-radius: var(--radius-sm);
+            padding: 14px 8px; cursor: pointer; transition: all var(--transition-fast);
+            color: var(--text-secondary); font-weight: 700; font-family: var(--font-body); font-size: 0.9rem;
+        }
+        .time-chip svg { width: 18px; height: 18px; }
+        .time-chip:hover { border-color: var(--gold); color: var(--text-primary); }
+        .time-chip.selected { border-color: var(--gold); background-color: var(--gold-soft); color: var(--gold); }
+
+        /* =========================================
+           7. Buttons
+           ========================================= */
+        .actions { display: flex; gap: 14px; margin-top: 36px; border-top: 1px solid var(--border-color); padding-top: 24px; }
+        .btn {
+            flex: 1; padding: 16px 24px; font-size: 1.05rem; font-family: var(--font-body); font-weight: 700;
+            border-radius: var(--radius-sm); border: none; cursor: pointer; transition: all var(--transition-fast);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--crimson) 0%, var(--crimson-hover) 100%); color: #fff;
+            box-shadow: 0 10px 22px -6px rgba(132, 39, 52, 0.55); border: 1px solid rgba(255,255,255,0.06);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -6px rgba(132, 39, 52, 0.65); }
         .btn-secondary { background-color: transparent; color: var(--text-secondary); border: 2px solid var(--border-color); }
-        .btn-secondary:hover { background-color: var(--bg-surface-hover); color: var(--text-primary); }
+        .btn-secondary:hover { background-color: var(--surface-hover); color: var(--text-primary); border-color: var(--gold); }
 
         /* =========================================
-           7. Success Screen & Payment Box (NEW)
+           8. Loader, Success & Payment
            ========================================= */
-        .loader-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(11, 17, 32, 0.9); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity var(--transition-normal); }
+        .loader-overlay {
+            position: absolute; inset: 0; background-color: rgba(7, 11, 20, 0.92); display: flex;
+            flex-direction: column; justify-content: center; align-items: center; z-index: 10;
+            backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity var(--transition-normal);
+        }
         .loader-overlay.active { opacity: 1; pointer-events: all; }
-        .spinner { width: 50px; height: 50px; border: 4px solid var(--border-color); border-top-color: var(--accent-gold); border-radius: 50%; animation: spin 1s linear infinite; }
-        
-        .success-screen { text-align: center; padding: 10px; }
-        .success-icon { width: 70px; height: 70px; background-color: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: var(--success-color); font-size: 35px; border: 2px solid var(--success-color); }
-        
-        /* تصميم صندوق الدفع الاحترافي */
-        .payment-box {
-            background: linear-gradient(145deg, rgba(212, 175, 55, 0.05) 0%, rgba(184, 29, 36, 0.05) 100%);
-            border: 1px solid var(--accent-gold);
-            border-radius: 12px;
-            padding: 25px;
-            margin: 25px 0;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        .payment-box h3 { color: var(--accent-gold); margin-bottom: 15px; font-size: 1.2rem; }
-        .payment-amount { 
-            display: inline-block; background-color: var(--accent-red); color: white; 
-            padding: 5px 15px; border-radius: 6px; font-size: 1.4rem; font-weight: bold; margin: 10px 0; 
-        }
-        .payment-number { 
-            display: inline-block; font-size: 1.6rem; font-weight: bold; color: var(--accent-gold);
-            letter-spacing: 2px; direction: ltr; padding: 10px 0;
-        }
-        .btn-whatsapp {
-            background-color: #25D366; color: white; text-decoration: none; padding: 14px;
-            border-radius: 8px; display: flex; justify-content: center; align-items: center;
-            gap: 10px; font-weight: bold; font-size: 1.1rem; width: 100%; transition: all var(--transition-fast);
-        }
-        .btn-whatsapp:hover { background-color: #20BA56; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3); }
+        .spinner { width: 48px; height: 48px; border: 4px solid var(--border-color); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; }
 
-        #toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-        .toast { background-color: var(--bg-surface); border-right: 4px solid var(--error-color); color: var(--text-primary); padding: 15px 25px; border-radius: 6px; box-shadow: var(--shadow-lg); font-weight: 600; animation: slideUpToast 0.3s forwards, fadeOutToast 0.3s 3s forwards; min-width: 250px; }
+        .success-screen { text-align: center; padding: 6px; }
+        .success-icon {
+            width: 72px; height: 72px; background-color: rgba(34, 181, 115, 0.1); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+            color: var(--success); font-size: 34px; border: 2px solid var(--success);
+        }
+        .success-screen h2 { font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; }
+        .success-screen > p { color: var(--text-secondary); font-size: 0.95rem; margin-top: 6px; }
+
+        .payment-box {
+            position: relative; background: linear-gradient(160deg, var(--navy-900) 0%, var(--surface) 100%);
+            border: 1px solid var(--gold); border-radius: var(--radius-md);
+            padding: 30px 24px 26px; margin: 26px 0; text-align: center; box-shadow: var(--shadow-sm);
+        }
+        .payment-badge {
+            display: inline-block; background-color: var(--gold-soft); color: var(--gold);
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; padding: 5px 14px;
+            border-radius: 999px; margin-bottom: 14px; text-transform: uppercase;
+        }
+        .payment-box h3 { font-family: var(--font-display); color: var(--text-primary); margin-bottom: 6px; font-size: 1.15rem; font-weight: 700; }
+        .payment-box > p { color: var(--text-secondary); font-size: 0.92rem; }
+        .payment-amount {
+            display: inline-block; background: linear-gradient(135deg, var(--crimson) 0%, var(--crimson-hover) 100%);
+            color: #fff; padding: 7px 20px; border-radius: var(--radius-sm); font-size: 1.4rem; font-weight: 800;
+            margin: 12px 0; box-shadow: 0 8px 18px -6px rgba(132, 39, 52, 0.5);
+        }
+        .payment-number-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 8px 0 4px; flex-wrap: wrap; }
+        .payment-number {
+            font-family: var(--font-display); font-size: 1.55rem; font-weight: 800; color: var(--gold);
+            letter-spacing: 2px; direction: ltr;
+        }
+        .copy-btn {
+            display: inline-flex; align-items: center; gap: 6px; background-color: transparent;
+            border: 1.5px solid var(--border-color); color: var(--text-secondary); font-family: var(--font-body);
+            font-size: 0.8rem; font-weight: 600; padding: 6px 12px; border-radius: 999px; cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        .copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .copy-btn svg { width: 14px; height: 14px; }
+        .payment-note { font-size: 0.85rem; color: var(--text-secondary); margin: 14px 0 22px; line-height: 1.7; }
+        .btn-whatsapp {
+            background-color: #25D366; color: white; text-decoration: none; padding: 15px;
+            border-radius: var(--radius-sm); display: flex; justify-content: center; align-items: center;
+            gap: 10px; font-weight: 700; font-family: var(--font-body); font-size: 1.05rem; width: 100%;
+            transition: all var(--transition-fast);
+        }
+        .btn-whatsapp:hover { background-color: #20BA56; transform: translateY(-2px); box-shadow: 0 10px 22px -6px rgba(37, 211, 102, 0.4); }
+
+        /* =========================================
+           9. Footer & Toast
+           ========================================= */
+        footer { text-align: center; padding: 28px 20px 36px; color: var(--text-muted); font-size: 0.82rem; }
+        footer .footer-rule { width: 56px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 14px; }
+
+        #toast-container { position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; pointer-events: none; }
+        .toast {
+            background-color: var(--surface); border-right: 4px solid var(--error); color: var(--text-primary);
+            padding: 15px 22px; border-radius: var(--radius-sm); box-shadow: var(--shadow-lg); font-weight: 600;
+            font-size: 0.92rem; animation: slideUpToast 0.3s forwards, fadeOutToast 0.3s 3s forwards;
+            min-width: 240px; max-width: 360px;
+        }
+        .toast.success { border-right-color: var(--success); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes slideUpToast { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUpToast { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeOutToast { from { opacity: 1; } to { opacity: 0; } }
 
-        @media (max-width: 600px) { .stepper { padding: 20px; } .step-label { font-size: 0.75rem; } .form-content { padding: 25px 20px; } .btn { font-size: 1rem; padding: 14px; } }
+        @media (max-width: 600px) {
+            header { padding: 38px 16px 32px; }
+            .stepper { padding: 24px 20px 18px; }
+            .step-label { font-size: 0.72rem; }
+            .form-content { padding: 26px 20px; }
+            .btn { font-size: 1rem; padding: 14px; }
+            .payment-number { font-size: 1.3rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
     </style>
 </head>
 <body>
 
     <header>
         <div class="brand-container">
-            <img src="WhatsApp Image 2026-06-19 at 6.20.23 PM_2.jpeg" alt="لوجو سنتر الكيان" class="logo" onerror="this.src='https://via.placeholder.com/150/16223D/D4AF37?text=AL-KAYAN'">
+            <div class="logo-frame">
+                <img src="WhatsApp Image 2026-06-19 at 6.20.23 PM_2.jpeg" alt="شعار سنتر الكيان التعليمي" class="logo"
+                     onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2748%27 fill=%27%230D1626%27/%3E%3Ctext x=%2750%27 y=%2768%27 font-size=%2752%27 font-family=%27Georgia,serif%27 fill=%27%23D4AF37%27 text-anchor=%27middle%27%3E%D9%83%3C/text%3E%3C/svg%3E';">
+            </div>
             <div>
                 <h1>سنتر الكيان التعليمي</h1>
                 <div class="subtitle">Student Academy</div>
+                <div class="tagline"></div>
             </div>
         </div>
     </header>
@@ -183,7 +372,7 @@
         <div class="app-container">
             <div class="loader-overlay" id="loader">
                 <div class="spinner"></div>
-                <p style="margin-top: 15px; color: var(--accent-gold); font-weight: bold;">جاري معالجة البيانات...</p>
+                <p style="margin-top: 16px; color: var(--gold); font-weight: 700;">جاري معالجة البيانات...</p>
             </div>
 
             <div class="stepper" id="stepper">
@@ -195,15 +384,22 @@
 
             <div class="form-content">
                 <form id="registrationApp" novalidate>
-                    
+
                     <div class="form-section active" id="section-1">
+                        <div class="section-heading"><span class="dot"></span>بياناتك الشخصية</div>
                         <div class="input-group">
                             <input type="text" id="studentName" class="input-control" placeholder="الاسم" required autocomplete="off">
+                            <span class="input-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </span>
                             <label class="floating-label">اسم الطالب ثلاثي</label>
                             <div class="error-message">يرجى إدخال الاسم بالكامل (الرجاء ادخال الاسم ثلاثي)</div>
                         </div>
                         <div class="input-group">
                             <input type="tel" id="studentPhone" class="input-control" placeholder="الهاتف" required autocomplete="off" dir="ltr" style="text-align: right;">
+                            <span class="input-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            </span>
                             <label class="floating-label">رقم الهاتف المحمول</label>
                             <div class="error-message">صيغة الرقم غير صحيحة. يجب أن يتكون من 11 رقم ويبدأ بـ 01</div>
                         </div>
@@ -213,6 +409,7 @@
                     </div>
 
                     <div class="form-section" id="section-2">
+                        <div class="section-heading"><span class="dot"></span>المادة الدراسية</div>
                         <div class="input-group">
                             <select id="subjectSelect" class="input-control" required><option value="" disabled selected></option></select>
                             <label class="floating-label">المادة الدراسية</label>
@@ -226,25 +423,23 @@
                     </div>
 
                     <div class="form-section" id="section-3">
-                        <div class="input-group">
-                            <select id="teacherSelect" class="input-control" required><option value="" disabled selected></option></select>
-                            <label class="floating-label">اسم المدرس</label>
-                            <div class="select-arrow"></div>
-                            <div class="error-message">يرجى اختيار المدرس</div>
+                        <div class="section-heading"><span class="dot"></span>المدرس والموعد</div>
+                        <div class="context-chip" id="subjectContext"></div>
+
+                        <div class="field-block">
+                            <label class="field-title">اختر المدرس المناسب</label>
+                            <div class="option-list" id="teacherOptions" role="group" aria-label="اسم المدرس"></div>
+                            <input type="hidden" id="teacherSelect" value="">
+                            <div class="error-message" id="teacherError">يرجى اختيار المدرس</div>
                         </div>
-                        <div class="input-group">
-                            <select id="timeSelect" class="input-control" required>
-                                <option value="" disabled selected></option>
-                                <option value="الموعد 1">الموعد 1</option>
-                                <option value="الموعد 2">الموعد 2</option>
-                                <option value="الموعد 3">الموعد 3</option>
-                                <option value="الموعد 4">الموعد 4</option>
-                                <option value="الموعد 5">الموعد 5</option>
-                            </select>
-                            <label class="floating-label">الموعد المتاح</label>
-                            <div class="select-arrow"></div>
-                            <div class="error-message">يرجى تحديد الموعد المناسب</div>
+
+                        <div class="field-block">
+                            <label class="field-title">اختر الموعد المتاح</label>
+                            <div class="option-grid" id="timeOptions" role="group" aria-label="الموعد المتاح"></div>
+                            <input type="hidden" id="timeSelect" value="">
+                            <div class="error-message" id="timeError">يرجى تحديد الموعد المناسب</div>
                         </div>
+
                         <div class="actions">
                             <button type="button" class="btn btn-secondary" onclick="appController.prev(3)">تعديل المادة</button>
                             <button type="submit" class="btn btn-primary">تأكيد الحجز النهائي</button>
@@ -255,22 +450,29 @@
                     <div class="form-section" id="section-4">
                         <div class="success-screen">
                             <div class="success-icon">✓</div>
-                            <h2 style="color: var(--success-color);">تم التسجيل المبدئي بنجاح!</h2>
-                            <p style="color: var(--text-secondary); font-size: 0.95rem;">تم إرسال بياناتك لقاعدة بيانات السنتر.</p>
-                            
+                            <h2>تم التسجيل المبدئي بنجاح!</h2>
+                            <p>تم إرسال بياناتك لقاعدة بيانات السنتر.</p>
+
                             <!-- صندوق الدفع الاحترافي -->
                             <div class="payment-box">
-                                <h3>خطوة أخيرة لتأكيد حجز مقعدك</h3>
+                                <span class="payment-badge">الخطوة الأخيرة</span>
+                                <h3>تأكيد حجز مقعدك</h3>
                                 <p>يرجى تحويل مبلغ</p>
                                 <div class="payment-amount">500 جنيهاً</div>
                                 <p>إلى الرقم التالي (فودافون كاش / انستا باي):</p>
-                                <div class="payment-number">01066020644</div>
-                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px;">
+                                <div class="payment-number-row">
+                                    <span class="payment-number" id="paymentNumber">01066020644</span>
+                                    <button type="button" class="copy-btn" onclick="appController.copyNumber()">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                        نسخ
+                                    </button>
+                                </div>
+                                <p class="payment-note">
                                     بعد إتمام التحويل، يرجى إرسال صورة إيصال الدفع (سكرين شوت) عبر الواتساب لتفعيل حسابك رسمياً.
                                 </p>
                                 <!-- زر الواتساب المباشر -->
                                 <a href="https://wa.me/201000361309" target="_blank" class="btn-whatsapp">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                                     </svg>
                                     إرسال صورة الدفع واتساب
@@ -285,6 +487,11 @@
             </div>
         </div>
     </main>
+
+    <footer>
+        <div class="footer-rule"></div>
+       
+    </footer>
 
     <div id="toast-container"></div>
 
@@ -304,22 +511,92 @@
             "Ict وتكنولوجيا المعلومات": ["ا. رنا سحبل (Ict)", "ا. غادة الفيشاوي ( تكنولوجيا)"]
         };
 
+        const TIME_SLOTS = ["الموعد 1", "الموعد 2", "الموعد 3", "الموعد 4", "الموعد 5"];
+
         const WEB_APP_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
 
         const appController = {
             currentStep: 1, totalSteps: 3,
 
-            init() { this.populateSubjects(); this.bindEvents(); },
+            init() { this.populateSubjects(); this.populateTimeSlots(); this.bindEvents(); },
 
             populateSubjects() {
                 const subjectSelect = document.getElementById('subjectSelect');
                 for (let subject in DB) { subjectSelect.add(new Option(subject, subject)); }
             },
 
+            populateTimeSlots() {
+                const container = document.getElementById('timeOptions');
+                container.innerHTML = '';
+                TIME_SLOTS.forEach(slot => {
+                    const chip = document.createElement('button');
+                    chip.type = 'button';
+                    chip.className = 'time-chip';
+                    chip.dataset.value = slot;
+                    chip.setAttribute('aria-pressed', 'false');
+                    chip.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span>${slot}</span>
+                    `;
+                    chip.addEventListener('click', () => this.selectTime(slot));
+                    container.appendChild(chip);
+                });
+            },
+
             populateTeachers(subject) {
-                const teacherSelect = document.getElementById('teacherSelect');
-                teacherSelect.innerHTML = '<option value="" disabled selected></option>'; 
-                if (DB[subject]) { DB[subject].forEach(teacher => { teacherSelect.add(new Option(teacher, teacher)); }); }
+                const container = document.getElementById('teacherOptions');
+                container.innerHTML = '';
+                document.getElementById('teacherSelect').value = '';
+                this.clearFieldError('teacherOptions', 'teacherError');
+
+                if (DB[subject]) {
+                    DB[subject].forEach(teacher => {
+                        const card = document.createElement('button');
+                        card.type = 'button';
+                        card.className = 'option-card';
+                        card.dataset.value = teacher;
+                        card.setAttribute('aria-pressed', 'false');
+                        card.innerHTML = `
+                            <span class="option-info">
+                                <span class="option-avatar">${this.getTeacherInitial(teacher)}</span>
+                                <span>${teacher}</span>
+                            </span>
+                            <span class="option-radio"></span>
+                        `;
+                        card.addEventListener('click', () => this.selectTeacher(teacher));
+                        container.appendChild(card);
+                    });
+                }
+            },
+
+            getTeacherInitial(teacher) {
+                const cleaned = teacher.replace(/^(ا\.|مستر|ميس|مس)\s*/u, '').trim();
+                return (cleaned.charAt(0) || teacher.charAt(0)).toUpperCase();
+            },
+
+            selectTeacher(teacher) {
+                document.getElementById('teacherSelect').value = teacher;
+                document.querySelectorAll('#teacherOptions .option-card').forEach(card => {
+                    const isSelected = card.dataset.value === teacher;
+                    card.classList.toggle('selected', isSelected);
+                    card.setAttribute('aria-pressed', String(isSelected));
+                });
+                this.clearFieldError('teacherOptions', 'teacherError');
+            },
+
+            selectTime(time) {
+                document.getElementById('timeSelect').value = time;
+                document.querySelectorAll('#timeOptions .time-chip').forEach(chip => {
+                    const isSelected = chip.dataset.value === time;
+                    chip.classList.toggle('selected', isSelected);
+                    chip.setAttribute('aria-pressed', String(isSelected));
+                });
+                this.clearFieldError('timeOptions', 'timeError');
+            },
+
+            clearFieldError(containerId, errorId) {
+                document.getElementById(containerId).classList.remove('invalid');
+                document.getElementById(errorId).classList.remove('show');
             },
 
             bindEvents() {
@@ -345,10 +622,18 @@
                     if (!subjectSelect.value) { subjectSelect.classList.add('invalid'); isValid = false; }
                 }
                 else if (step === 3) {
-                    const teacherSelect = document.getElementById('teacherSelect');
-                    const timeSelect = document.getElementById('timeSelect');
-                    if (!teacherSelect.value) { teacherSelect.classList.add('invalid'); isValid = false; }
-                    if (!timeSelect.value) { timeSelect.classList.add('invalid'); isValid = false; }
+                    const teacherValue = document.getElementById('teacherSelect').value;
+                    const timeValue = document.getElementById('timeSelect').value;
+                    if (!teacherValue) {
+                        document.getElementById('teacherOptions').classList.add('invalid');
+                        document.getElementById('teacherError').classList.add('show');
+                        isValid = false;
+                    }
+                    if (!timeValue) {
+                        document.getElementById('timeOptions').classList.add('invalid');
+                        document.getElementById('timeError').classList.add('show');
+                        isValid = false;
+                    }
                 }
                 if (!isValid) this.showToast("يرجى تصحيح الأخطاء قبل المتابعة");
                 return isValid;
@@ -357,6 +642,10 @@
             next(current) {
                 if (!this.validateStep(current)) return;
                 document.getElementById(`indicator-${current}`).classList.add('completed');
+                if (current === 2) {
+                    const subject = document.getElementById('subjectSelect').value;
+                    document.getElementById('subjectContext').textContent = `المادة المختارة: ${subject}`;
+                }
                 this.goToStep(current + 1);
             },
 
@@ -412,10 +701,32 @@
                 }
             },
 
-            showToast(message) {
+            copyNumber() {
+                const numberText = document.getElementById('paymentNumber').innerText.trim();
+                const fallbackCopy = () => {
+                    const temp = document.createElement('textarea');
+                    temp.value = numberText;
+                    temp.style.position = 'fixed';
+                    temp.style.opacity = '0';
+                    document.body.appendChild(temp);
+                    temp.select();
+                    try { document.execCommand('copy'); this.showToast('تم نسخ الرقم بنجاح', 'success'); }
+                    catch (e) { this.showToast('تعذر نسخ الرقم، يرجى نسخه يدوياً'); }
+                    document.body.removeChild(temp);
+                };
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(numberText)
+                        .then(() => this.showToast('تم نسخ الرقم بنجاح', 'success'))
+                        .catch(fallbackCopy);
+                } else {
+                    fallbackCopy();
+                }
+            },
+
+            showToast(message, type = 'error') {
                 const container = document.getElementById('toast-container');
                 const toast = document.createElement('div');
-                toast.className = 'toast'; toast.innerText = message;
+                toast.className = `toast ${type}`; toast.innerText = message;
                 container.appendChild(toast);
                 setTimeout(() => { toast.remove(); }, 3500);
             }
