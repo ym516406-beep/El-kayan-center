@@ -279,6 +279,51 @@
   }
   .bookings-list .b-item .sub{color:var(--gold-light); font-weight:700;}
 
+  /* ---------- payment confirmation card ---------- */
+  .payment-card{
+    background:var(--navy-800);
+    border:1.5px solid rgba(201,162,39,.3);
+    border-radius:var(--radius-md);
+    padding:24px 22px;
+    margin-bottom:22px;
+  }
+  .payment-card .ptitle{
+    display:flex; align-items:center; gap:9px;
+    font-family:var(--ff-display); font-weight:700; font-size:1.12rem;
+    color:var(--gold-light); margin-bottom:8px;
+  }
+  .payment-card .ptitle svg{width:22px; height:22px; stroke:var(--gold-light); flex-shrink:0;}
+  .payment-card .pdesc{color:var(--navy-300); font-size:.9rem; margin:0 0 14px;}
+  .amount-badge{
+    display:inline-flex; align-items:baseline; gap:6px;
+    background:linear-gradient(180deg,var(--gold-light),var(--gold));
+    color:var(--navy-900); font-weight:800; font-family:var(--ff-display);
+    padding:7px 18px; border-radius:999px; font-size:1.05rem; margin:0 0 16px;
+  }
+  .methods{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;}
+  .method-pill{
+    background:var(--navy-700); border:1px solid var(--navy-500); border-radius:999px;
+    padding:7px 16px; font-size:.82rem; color:var(--cream);
+  }
+  .phone-box{
+    background:var(--navy-900); border:1.5px dashed var(--gold-dim); border-radius:var(--radius-sm);
+    padding:13px 18px; display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:18px; gap:10px; flex-wrap:wrap;
+  }
+  .phone-box .num{font-family:var(--ff-display); font-weight:700; font-size:1.15rem; color:var(--white); direction:ltr;}
+  .copy-btn{
+    background:none; border:1px solid var(--navy-500); color:var(--navy-300); border-radius:8px;
+    padding:6px 13px; font-size:.76rem; cursor:pointer; transition:all .2s ease; white-space:nowrap;
+  }
+  .copy-btn:hover{border-color:var(--gold); color:var(--gold-light);}
+  .btn-whatsapp{
+    background:linear-gradient(180deg,#3fd17e,#1fa855); color:#fff;
+    display:inline-flex; align-items:center; gap:9px; width:100%; justify-content:center;
+  }
+  .btn-whatsapp svg{width:19px; height:19px; stroke:#fff; flex-shrink:0;}
+  .btn-whatsapp:hover{transform:translateY(-2px);}
+  .pnote{color:var(--navy-300); font-size:.78rem; margin:12px 0 0; text-align:center;}
+
   footer{
     position:relative; z-index:1; text-align:center; padding:30px 6vw 40px;
     color:var(--navy-300); font-size:.8rem; border-top:1px solid rgba(201,162,39,.15); margin-top:50px;
@@ -321,11 +366,11 @@
 
   <!-- TRACKER -->
   <nav class="tracker" id="tracker">
-    <div class="node" data-step="1"><div class="line"></div><div class="dot">1</div><div class="label">التسجيل</div></div>
-    <div class="node" data-step="2"><div class="line"></div><div class="dot">2</div><div class="label">المادة</div></div>
-    <div class="node" data-step="3"><div class="line"></div><div class="dot">3</div><div class="label">المدرس</div></div>
-    <div class="node" data-step="4"><div class="line"></div><div class="dot">4</div><div class="label">الميعاد</div></div>
-    <div class="node" data-step="5"><div class="line"></div><div class="dot">5</div><div class="label">التأكيد</div></div>
+    <div class="node" data-step="1"><div class="line"></div><div class="dot">١</div><div class="label">التسجيل</div></div>
+    <div class="node" data-step="2"><div class="line"></div><div class="dot">٢</div><div class="label">المادة</div></div>
+    <div class="node" data-step="3"><div class="line"></div><div class="dot">٣</div><div class="label">المدرس</div></div>
+    <div class="node" data-step="4"><div class="line"></div><div class="dot">٤</div><div class="label">الميعاد</div></div>
+    <div class="node" data-step="5"><div class="line"></div><div class="dot">٥</div><div class="label">التأكيد</div></div>
   </nav>
 
   <div class="steps">
@@ -339,7 +384,7 @@
           <div class="field">
             <label for="fname">الاسم بالكامل</label>
             <input type="text" id="fname" placeholder="اكتب اسمك هنا" required minlength="3">
-            <div class="err" id="errName">من فضلك اكتب اسم صحيح (يرجي كتابه الاسم ثلاثي)</div>
+            <div class="err" id="errName">من فضلك اكتب اسم صحيح (٣ أحرف على الأقل)</div>
           </div>
           <div class="field">
             <label for="fphone">رقم الموبايل</label>
@@ -403,6 +448,28 @@
           <div class="bookings-list" id="bookingsList"></div>
         </div>
 
+        <div class="payment-card">
+          <div class="ptitle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+            لتأكيد الحجز نهائيًا
+          </div>
+          <p class="pdesc">عشان نقفل لك الميعاد، حوّل مبلغ التأكيد وابعتلنا صورة التحويل على واتساب.</p>
+          <div class="amount-badge">٢٠ جنيه فقط</div>
+          <div class="methods">
+            <span class="method-pill">فودافون كاش</span>
+            <span class="method-pill">إنستا باي</span>
+          </div>
+          <div class="phone-box">
+            <span class="num" id="payPhone">01066020644</span>
+            <button class="copy-btn" type="button" onclick="copyPhone()" id="copyBtn">نسخ الرقم</button>
+          </div>
+          <button class="btn btn-whatsapp" type="button" onclick="sendWhatsApp()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c0 4-4 7-9 7-1.1 0-2.2-.15-3.2-.43L4 20l1.1-3.3C3.8 15.4 3 13.8 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg>
+            إرسال صورة التحويل على واتساب
+          </button>
+          <p class="pnote">هيفتحلك شات واتساب جاهز ببيانات حجزك — كل اللي عليك ترفق صورة التحويل وتدوس إرسال.</p>
+        </div>
+
         <div class="btn-row">
           <button class="btn btn-primary" onclick="addAnotherSubject()">احجز مادة تانية</button>
           <button class="btn btn-ghost" onclick="fullReset()">تسجيل جديد بالكامل</button>
@@ -414,7 +481,7 @@
 </div>
 
 <footer>
- <b>سنتر الكيان التعليمي</b> — Student Academy
+  جميع الحقوق محفوظة لـ <b>سنتر الكيان التعليمي</b> — Student Academy
 </footer>
 
 <script>
@@ -449,7 +516,11 @@ const SUBJECTS = [
 const SLOTS = ['الأول','الثاني','الثالث','الرابع','الخامس'];
 
 /* ====== Google Sheet web app URL — see setup instructions ====== */
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzd7IOeFXxUAZ0eIcpuXbjKewR8fWG3F1TrnRYsNtLY-y9HnQH9xXSN8cX01LLNRjOk/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzd7IOeFXxUAZ0elcpuXbjKewR8fWG3F1TrnRYsNtLY-y9HnQH9xXSN8cX01LLNRjOk/exec";
+
+/* ====== center contact for payment confirmation ====== */
+const CENTER_PHONE_DISPLAY = "01066020644";
+const CENTER_WHATSAPP_INTL = "201066020644"; // same number in international format (20 + number without the leading 0)
 
 /* ============== STATE (in-memory only) ============== */
 let state = { name:'', phone:'', subjectId:null, teacher:null, slot:null };
@@ -599,6 +670,49 @@ function fullReset(){
   document.getElementById('hero').scrollIntoView({behavior:'smooth'});
 }
 
+/* ============== payment confirmation: WhatsApp + copy number ============== */
+function sendWhatsApp(){
+  const subject = SUBJECTS.find(s=>s.id===state.subjectId);
+  const lines = [
+    `السلام عليكم، أنا ${state.name}`,
+    `حجزت في سنتر الكيان التعليمي:`,
+    `المادة: ${subject ? subject.name : ''}`,
+    `المدرس: ${state.teacher || ''}`,
+    `الميعاد: ${state.slot || ''}`,
+    `رقم الموبايل: ${state.phone}`,
+    ``,
+    `ده صورة تحويل مبلغ التأكيد (٢٠ جنيه) 👇`
+  ];
+  const msg = lines.join('\n');
+  const url = `https://wa.me/${CENTER_WHATSAPP_INTL}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+function copyPhone(){
+  const btn = document.getElementById('copyBtn');
+  const showCopied = ()=>{
+    const original = btn.textContent;
+    btn.textContent = 'تم النسخ ✓';
+    setTimeout(()=>{ btn.textContent = original; }, 1500);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(CENTER_PHONE_DISPLAY).then(showCopied).catch(()=>fallbackCopy(showCopied));
+  } else {
+    fallbackCopy(showCopied);
+  }
+}
+
+function fallbackCopy(onDone){
+  const temp = document.createElement('textarea');
+  temp.value = CENTER_PHONE_DISPLAY;
+  temp.style.position = 'fixed';
+  temp.style.opacity = '0';
+  document.body.appendChild(temp);
+  temp.focus(); temp.select();
+  try{ document.execCommand('copy'); onDone(); }catch(err){ /* ignore */ }
+  document.body.removeChild(temp);
+}
+
 /* ============== Google Sheet integration ============== */
 async function sendToSheet(data){
   if(!GOOGLE_SCRIPT_URL || !GOOGLE_SCRIPT_URL.startsWith('http')) return; // not configured yet
@@ -610,7 +724,7 @@ async function sendToSheet(data){
       body: JSON.stringify(data)
     });
   }catch(err){
-    console.warn('تعذر إرسال الحجز لجوجل شيت:', err);
+    console.warn('تعذر تأكيد الحجز  :', err);
   }
 }
 </script>
